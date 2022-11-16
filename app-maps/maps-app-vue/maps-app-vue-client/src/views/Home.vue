@@ -1,6 +1,17 @@
 <template>
   <div class="h-screen relative">
-    <GeoError @closeGeoError="closeGeoError()" v-if="geoError" :geoErrorMsg="geoErrorMsg" />
+    <GeoError
+      @closeGeoError="closeGeoError()"
+      v-if="geoError"
+      :geoErrorMsg="geoErrorMsg"
+    />
+    <!-- <MapFeatures
+      @getGeolocation="getGeolocation"
+      :coords="coords"
+      :fetchCoords="fetchCoords"
+    /> -->
+    <!-- TODO: put search on left-down side -->
+    <SearchMap /> 
     <div id="map" class="h-full z-[1]"></div>
   </div>
 </template>
@@ -10,13 +21,17 @@ import leaflet from "leaflet";
 import { onMounted, ref } from "vue";
 
 import GeoError from "../components/GeoError.vue";
+// import MapFeatures from "../components/MapFeatures.vue";
+import SearchMap from "../components/SearchMap.vue"
 
 export default {
   TOKEN:
     "pk.eyJ1IjoibWF0dGlhcmF2YWduaW45OSIsImEiOiJjbGFoOGU2Z2EwNjE3M3VueWlsbXlwZGZ0In0.uVxGywDyvoeSZ0z9g96AqA",
   name: "Home",
   components: {
-    GeoError
+    GeoError,
+    SearchMap
+    //MapFeatures,
   },
   setup() {
     let map;
@@ -38,19 +53,21 @@ export default {
     const fetchCoords = ref(null);
     const geoMarker = ref(null);
 
-    const geoError = ref(null)
-    const geoErrorMsg = ref ('')
+    const geoError = ref(null);
+    const geoErrorMsg = ref("");
 
     //get user location
     const getGeolocation = () => {
-      //check session for coords
-      if(sessionStorage.getItem('coords')) {
-        coords.value = JSON.parse(sessionStorage.getItem('coords'))
-        plotGeolocation(coords.value);
-        return
+      if (!coords.value) {
+        //check session for coords
+        if (sessionStorage.getItem("coords")) {
+          coords.value = JSON.parse(sessionStorage.getItem("coords"));
+          plotGeolocation(coords.value);
+          return;
+        }
+        fetchCoords.value = true;
+        navigator.geolocation.getCurrentPosition(setCoords, getLocError);
       }
-      fetchCoords.value = true;
-      navigator.geolocation.getCurrentPosition(setCoords, getLocError);
     };
 
     const setCoords = (pos) => {
@@ -73,9 +90,9 @@ export default {
     };
 
     const getLocError = (err) => {
-      fetchCoords.value = null
-      geoError.value = true
-      geoErrorMsg.value = err.message
+      fetchCoords.value = null;
+      geoError.value = true;
+      geoErrorMsg.value = err.message;
     };
 
     const plotGeolocation = () => {
@@ -87,20 +104,19 @@ export default {
 
       //create marker with coords and custom icon
       geoMarker.value = leaflet
-        .marker([coords.value.lat, coords.value.lng], { icon: customMarker })// ??? .value
-        .addTo(map); 
-      
+        .marker([coords.value.lat, coords.value.lng], { icon: customMarker }) // ??? .value
+        .addTo(map);
+
       // set map view (current location)
-      map.setView([coords.value.lat, coords.value.lng], 10)
-      
+      map.setView([coords.value.lat, coords.value.lng], 16);
     };
 
     const closeGeoError = () => {
-      geoError.value = null
-      geoErrorMsg.value = null
-    }
+      geoError.value = null;
+      geoErrorMsg.value = null;
+    };
 
-    return { coords, geoMarker, closeGeoError, geoError, geoErrorMsg };
+    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg };
   },
 };
 </script>
