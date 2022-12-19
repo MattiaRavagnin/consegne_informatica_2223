@@ -11,7 +11,15 @@
       :fetchCoords="fetchCoords"
     /> -->
     <!-- TODO: put search on left-down side -->
-    <SearchMap /> 
+    <SearchMap  
+    
+      :fetchCoords="fetchCoords"
+      :coords="coords"
+      @toggleSearchResults="toggleSearchResults"
+      @getGeolocation="getGeolocation"
+      @plotResult="plotResult"
+      @removeResult="removeResult"
+      :searchResults="searchResults"/>
     <div id="map" class="h-full z-[1]"></div>
   </div>
 </template>
@@ -22,7 +30,7 @@ import { onMounted, ref } from "vue";
 
 import GeoError from "../components/GeoError.vue";
 // import MapFeatures from "../components/MapFeatures.vue";
-import SearchMap from "../components/SearchMap.vue"
+import SearchMap from "../components/SearchMap.vue";
 
 export default {
   TOKEN:
@@ -30,7 +38,7 @@ export default {
   name: "Home",
   components: {
     GeoError,
-    SearchMap
+    SearchMap,
     //MapFeatures,
   },
   setup() {
@@ -116,7 +124,38 @@ export default {
       geoErrorMsg.value = null;
     };
 
-    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg };
+    const resultMarker = ref(null);
+    const plotResult = (coords) => {
+
+      if (resultMarker.value) {
+        map.removeLayer(resultMarker.value);
+      }
+
+      //create marker
+      const customMarker = leaflet.icon({
+        // TODO change marker image
+        iconUrl: require("../assets/map-marker-blue.svg"),
+        iconSize: [35, 35],
+      });
+
+      //create marker with coords and custom icon
+      resultMarker.value = leaflet
+        .marker([coords.coordinates[1], coords.coordinates[0]], { icon: customMarker }) // ??? .value
+        .addTo(map);
+
+      // set map view (current location)
+      map.setView([coords.coordinates[1], coords.coordinates[0]], 14);
+    };
+
+    const searchResults = ref(null);
+    const toggleSearchResults = () => {
+      searchResults.value = !searchResults.value;
+    };
+    const closeSearchResults = () => {
+      searchResults.value = null;
+    };
+
+    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults };
   },
 };
 </script>
