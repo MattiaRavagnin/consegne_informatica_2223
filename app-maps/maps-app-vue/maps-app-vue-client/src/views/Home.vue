@@ -54,6 +54,10 @@ export default {
         })
         .addTo(map);
 
+      map.on('moveend', () => {
+        closeSearchResults()
+      })
+      map.onMapClick
       getGeolocation();
     });
 
@@ -151,11 +155,16 @@ export default {
     const toggleSearchResults = () => {
       searchResults.value = !searchResults.value;
     };
+
     const closeSearchResults = () => {
       searchResults.value = null;
     };
 
-    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults };
+    const removeResult = () => {
+      map.removeLayer(resultMarker.value)
+    }
+
+    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults, removeResult };
   },
 };
 </script>

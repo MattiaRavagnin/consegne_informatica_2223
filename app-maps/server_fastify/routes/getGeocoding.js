@@ -20,6 +20,26 @@ async function routes (fastify, options) {
            const results = await axios(
               `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?${params}` 
            )
+
+            results.data.features.forEach((item) => {
+                item.locality = item.text
+                item.city = null
+                item.region = null
+                item.country = null
+
+                item.context.forEach((type) => {
+                    
+                    if (type.id.includes("place")) {
+                        item.city = type.text;
+                    }
+                    if (type.id.includes("region")) {
+                        item.region = type.text;
+                    }
+                    if (type.id.includes("country")) {
+                        item.country = type.text;
+                    }
+                });
+            });
            const data = results.data
 
            res.send(data)

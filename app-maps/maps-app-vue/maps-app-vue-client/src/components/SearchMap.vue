@@ -2,6 +2,7 @@
   <div
     class="w-full md:w-auto absolute md:top-[40px] md:left-[60px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
   >
+    <!-- TODO: sistemare posizionamento searchbar -->
     <!-- Search -->
     <div class="realtive flex-1 md:min-w-[350px]">
       <!-- Input -->
@@ -40,8 +41,28 @@
 
           
         </div>
+
+        <!-- TODO: da spostare -->
+        <!-- Banner -->
+        <div v-if="selectedResult" class="mt-2 px-4 py-3 bg-white rounded-md">
+
+          <i @click="removeResult" class="flex justify-end far fa-times-circle"></i>
+          
+
+          <h1 class="text-lg">{{ selectedResult.text }}</h1>
+          <p class="text-xs mb-1">
+            {{ selectedResult.properties.address }}  {{ selectedResult.city }}
+            {{ selectedResult.region }}
+          </p>
+          <p class="text-xs">{{ selectedResult.properties.category }}</p>
+          
+          <i @click="addFav" class="flex justify-end fa-regular fa-star"></i>
+          <!-- <i class="flex justify-end fa-solid fa-star"></i> -->
+        </div>
       </div>
     </div>
+
+    
   </div>
 </template>
 
@@ -87,7 +108,16 @@ export default {
       emit('plotResult', result.geometry)
     }
 
-    return { searchQuery, searchData, search, selectResult, queryTimeout };
+    const removeResult = () => {
+      selectedResult.value = null
+      emit("removeResult")
+    }
+
+    const addFav = () => {
+
+    }
+
+    return { searchQuery, searchData, search, selectResult, queryTimeout, selectedResult, removeResult, addFav };
   },
 };
 </script>
