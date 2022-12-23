@@ -115,6 +115,8 @@ export default {
 
     const addFav = () => {
 
+      //TODO: make put request for add place to favList
+      axios.post(`http://localhost:3000/addFavPlace`,{data: selectedResult.value }) 
     }
 
     return { searchQuery, searchData, search, selectResult, queryTimeout, selectedResult, removeResult, addFav };

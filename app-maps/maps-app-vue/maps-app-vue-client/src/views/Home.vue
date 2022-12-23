@@ -21,6 +21,7 @@
       :searchResults="searchResults"
     />
 
+    <FavList/>
     
     <div id="map" class="h-full z-[1] rounded-lg "></div>
 
@@ -35,6 +36,7 @@ import { onMounted, ref } from "vue";
 import GeoError from "../components/GeoError.vue";
 // import MapFeatures from "../components/MapFeatures.vue";
 import SearchMap from "../components/SearchMap.vue";
+import FavList from "../components/FavList.vue";
 
 export default {
   TOKEN:
@@ -43,6 +45,7 @@ export default {
   components: {
     GeoError,
     SearchMap,
+    FavList
     //MapFeatures,
   },
   setup() {
