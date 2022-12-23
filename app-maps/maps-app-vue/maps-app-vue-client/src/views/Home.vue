@@ -12,15 +12,19 @@
     /> -->
     <!-- TODO: put search on left-down side -->
     <SearchMap  
-    
       :fetchCoords="fetchCoords"
       :coords="coords"
       @toggleSearchResults="toggleSearchResults"
       @getGeolocation="getGeolocation"
       @plotResult="plotResult"
       @removeResult="removeResult"
-      :searchResults="searchResults"/>
-    <div id="map" class="h-full z-[1]"></div>
+      :searchResults="searchResults"
+    />
+
+    
+    <div id="map" class="h-full z-[1] rounded-lg "></div>
+
+
   </div>
 </template>
 
