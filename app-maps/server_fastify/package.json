@@ -4,9 +4,11 @@
     "@fastify/postgres": "^5.2.0",
     "axios": "^1.1.3",
     "dotenv": "^16.0.3",
-    "fastify": "^4.9.2",
+    "fastify": "^4.11.0",
     "fastify-plugin": "^4.4.0",
-    "pg": "^8.8.0"
+    "fastify-postgres": "^3.7.0",
+    "pg": "^8.8.0",
+    "uuid": "^9.0.0"
   },
   "name": "server_fastify",
   "version": "1.0.0",

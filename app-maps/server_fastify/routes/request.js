@@ -3,7 +3,7 @@ const {allFavPlace} = require('./schemas')
 async function request(fastify, options){
     const client = fastify.db.client
 
-    fastify.get('/:query', {schema: allFavPlace}, async function (request,reply){
+    fastify.get('/:query', async function (request,reply){
         try {
             await client.query('SELECT * FROM public.test')
             console.log(request.rows)

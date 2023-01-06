@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full md:w-auto absolute md:top-[40px] md:left-[60px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
+    class="w-full md:w-auto absolute md:top-[40px] md:left-[80px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
   >
     <!-- TODO: sistemare posizionamento searchbar -->
     <!-- Search -->
@@ -56,7 +56,7 @@
           </p>
           <p class="text-xs">{{ selectedResult.properties.category }}</p>
           
-          <i @click="addFav" class="flex justify-end fa-regular fa-star"></i>
+          <i @click="addFav()" class="flex justify-end fa-regular fa-star"></i>
           <!-- <i class="flex justify-end fa-solid fa-star"></i> -->
         </div>
       </div>
@@ -114,9 +114,18 @@ export default {
     }
 
     const addFav = () => {
+       
 
-      //TODO: make put request for add place to favList
-      axios.post(`http://localhost:3000/addFavPlace`,{data: selectedResult.value }) 
+      let place = {
+        locality: selectedResult.value.locality,
+        city: selectedResult.value.city,
+        region: selectedResult.value.region,
+        country: selectedResult.value.country,
+        lat: selectedResult.value.center[1],
+        lng: selectedResult.value.center[0]
+      }
+
+      axios.post(`http://localhost:3000/addFavPlace`,{data: place }) 
     }
 
     return { searchQuery, searchData, search, selectResult, queryTimeout, selectedResult, removeResult, addFav };

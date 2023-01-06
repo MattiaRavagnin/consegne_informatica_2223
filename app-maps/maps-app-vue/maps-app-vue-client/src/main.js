@@ -18,8 +18,6 @@ app
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(gAuth, {
       clientId: gauthClientId,
-      scope: '',
-
     })
     .mount('#app')
 
