@@ -56,7 +56,18 @@ fastify.get('/getFavList', async (request, reply) => {
   let { rows } = await fastify.pg.query(
     'SELECT * FROM place'
   )
-  
+  reply.send(rows)
+
+})
+
+fastify.get('/getCoords/:id_place', async (request, reply) => {
+
+  console.log(request.params.id_place)
+  let { rows } = await fastify.pg.query(
+    'SELECT lat,lng FROM coords WHERE id_place = $1',
+    [request.params.id_place]
+  )
+  console.log(rows)
   reply.send(rows)
 
 })

@@ -171,7 +171,33 @@ export default {
       map.removeLayer(resultMarker.value)
     }
 
-    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults, removeResult };
+    
+    const centerFavPlace = (coords) => {
+
+      if (resultMarker.value) {
+        map.removeLayer(resultMarker.value);
+      }
+
+      //create marker
+      const customMarker = leaflet.icon({
+        // TODO change marker image
+        iconUrl: require("../assets/map-marker-blue.svg"),
+        iconSize: [35, 35],
+      });
+
+      //create marker with coords and custom icon
+      resultMarker.value = leaflet
+        .marker([coords[0].lat, coords[0].lng], { icon: customMarker }) // ??? .value
+        .addTo(map);
+      
+        // set map view (current location)
+      map.setView([coords[0].lat, coords[0].lng], 15);
+    };
+
+    // const event = new Event('centerFavPlace');
+    // event.
+
+    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults, removeResult, centerFavPlace };
   },
 };
 </script>
