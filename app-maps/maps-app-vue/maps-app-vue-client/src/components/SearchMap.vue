@@ -12,7 +12,7 @@
         placeholder="Search..."
         v-model="searchQuery"
         @input="search"
-        @focus="$emit('toggleSearchResults')"
+        @keyup.enter="$emit('toggleSearchResults')"
       />
       <!-- Search Icon -->
       <!-- <div class="absolute top-0 left-[8px] h-full flex items-center">
@@ -128,7 +128,8 @@ export default {
 
     const addFav = async () => {
       
-      axios.post(`http://localhost:3000/addFavPlace`,{data: await placeAsign() }) 
+      await axios.post(`http://localhost:3000/addFavPlace`,{data: await placeAsign() })
+      
       
     }
 

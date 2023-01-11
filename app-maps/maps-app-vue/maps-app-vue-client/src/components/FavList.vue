@@ -1,12 +1,21 @@
 <template>
-  <div class=" md:w-auto absolute md:top-[40px] md:right-[60px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-white ">
+  <div class=" md:w-auto fixed bottom-1 right-1 z-[2] flex px-2 py-2 mr-4 mb-4 bg-white opacity-80 border border-black border-2 rounded-md shadow-md">
     <!-- <div class="">
       <button @click="viewFavList()" class="bg-black hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full ">
         <i class="fa-sharp fa-solid fa-heart"></i>
       </button>
     </div> -->
     <!-- v-if="showList" -->
-    <div  class=" overflow-auto  bg-black rounded-md mx-2 max-h-64">
+    <div class="px-2 text-lg">
+      <div>
+        Favorite
+      </div>
+      <div>
+        Places
+      </div>
+      
+    </div>
+    <div  class=" overflow-auto bg-transparent rounded-md mx-2 max-h-64">
       <div v-for="(place, index) in list" :key="index" class="mx-2 my-2 mr-2 bg-gray-200 rounded-md">
           <div class="mx-2">
             {{ place.locality }}, {{ place.city }}
@@ -34,12 +43,7 @@ import axios from "axios";
 export default {
   name: "FavList",
   async mounted() {
-    await axios
-        .get(`http://localhost:3000/getFavList`)
-        .then(response => {
-          this.list = response.data
-          console.log(this.list)
-        })
+    await this.getFavList()
   },
   created() {},
   data() {
@@ -58,6 +62,15 @@ export default {
       }else {
         this.showList = false
       }
+    },
+
+    async getFavList(){
+      axios
+        .get(`http://localhost:3000/getFavList`)
+        .then(response => {
+          this.list = response.data
+          console.log(this.list)
+        })
     },
     
 

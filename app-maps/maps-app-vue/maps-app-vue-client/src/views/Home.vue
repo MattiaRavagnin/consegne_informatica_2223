@@ -1,9 +1,7 @@
 <template>
   <div class="h-screen relative">
 
-    <ButtonList class="mt-20"></ButtonList>
-    <NavBar></NavBar>
-
+  
     <GeoError
       @closeGeoError="closeGeoError()"
       v-if="geoError"
@@ -20,24 +18,21 @@
         @plotResult="plotResult"
         @removeResult="removeResult"
         :searchResults="searchResults"
-        class="ml-40 mt-20"
+        class=""
       >
       
       </SearchMap>
     </div>
     
 
-    <div >
+    <div class="">
       <FavList></FavList>
     </div>
     
-    
-    
-    
-    <div id="map" class="h-full z-[1] rounded-lg mt-8 ">
+    <div id="map" class="h-full z-[1] rounded-lg ">
 
 
-      
+
     </div>
 
 
@@ -47,13 +42,14 @@
 <script>
 import leaflet from "leaflet";
 import { onMounted, ref } from "vue";
+import axios from 'axios'
 
 import GeoError from "../components/GeoError.vue";
 // import MapFeatures from "../components/MapFeatures.vue";
 import SearchMap from "../components/SearchMap.vue";
 import FavList from "../components/FavList.vue";
-import ButtonList from "../components/ButtonList.vue";
-import NavBar from "../components/NavBar.vue";
+//import ButtonList from "../components/ButtonList.vue";
+// import NavBar from "../components/NavBar.vue";
 
 export default {
   TOKEN:
@@ -63,12 +59,16 @@ export default {
     GeoError,
     SearchMap,
     FavList,
-    NavBar,
-    ButtonList
+    
+    
     //MapFeatures,
+  },
+  mounted() {
+    
   },
   data() {
     return {
+      list: {},
       showList: false
     }
   },
@@ -218,10 +218,19 @@ export default {
       map.setView([coords[0].lat, coords[0].lng], 15);
     };
 
+
+    const getFavList = () => {
+      axios
+        .get(`http://localhost:3000/getFavList`)
+        .then(response => {
+          this.list = response.data
+          console.log(this.list)
+        })
+    }
     // const event = new Event('centerFavPlace');
     // event.
 
-    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults, removeResult, centerFavPlace };
+    return { coords, fetchCoords, geoMarker, closeGeoError, geoError, geoErrorMsg, plotResult, toggleSearchResults, closeSearchResults, searchResults, removeResult, centerFavPlace, getFavList };
   },
 };
 </script>
