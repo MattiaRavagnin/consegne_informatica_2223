@@ -1,29 +1,44 @@
 <template>
   <div class="h-screen relative">
+
+    <ButtonList class="mt-20"></ButtonList>
+    <NavBar></NavBar>
+
     <GeoError
       @closeGeoError="closeGeoError()"
       v-if="geoError"
       :geoErrorMsg="geoErrorMsg"
     />
-    <!-- <MapFeatures
-      @getGeolocation="getGeolocation"
-      :coords="coords"
-      :fetchCoords="fetchCoords"
-    /> -->
-    <!-- TODO: put search on left-down side -->
-    <SearchMap  
-      :fetchCoords="fetchCoords"
-      :coords="coords"
-      @toggleSearchResults="toggleSearchResults"
-      @getGeolocation="getGeolocation"
-      @plotResult="plotResult"
-      @removeResult="removeResult"
-      :searchResults="searchResults"
-    />
 
-    <FavList/>
+    <div >
+      <!-- TODO: put search on left-down side from here -->
+      <SearchMap  
+        :fetchCoords="fetchCoords"
+        :coords="coords"
+        @toggleSearchResults="toggleSearchResults"
+        @getGeolocation="getGeolocation"
+        @plotResult="plotResult"
+        @removeResult="removeResult"
+        :searchResults="searchResults"
+        class="ml-40 mt-20"
+      >
+      
+      </SearchMap>
+    </div>
     
-    <div id="map" class="h-full z-[1] rounded-lg "></div>
+
+    <div >
+      <FavList></FavList>
+    </div>
+    
+    
+    
+    
+    <div id="map" class="h-full z-[1] rounded-lg mt-8 ">
+
+
+      
+    </div>
 
 
   </div>
@@ -37,6 +52,8 @@ import GeoError from "../components/GeoError.vue";
 // import MapFeatures from "../components/MapFeatures.vue";
 import SearchMap from "../components/SearchMap.vue";
 import FavList from "../components/FavList.vue";
+import ButtonList from "../components/ButtonList.vue";
+import NavBar from "../components/NavBar.vue";
 
 export default {
   TOKEN:
@@ -45,8 +62,15 @@ export default {
   components: {
     GeoError,
     SearchMap,
-    FavList
+    FavList,
+    NavBar,
+    ButtonList
     //MapFeatures,
+  },
+  data() {
+    return {
+      showList: false
+    }
   },
   setup() {
     let map;
@@ -117,7 +141,7 @@ export default {
     const plotGeolocation = () => {
       //create marker
       const customMarker = leaflet.icon({
-        iconUrl: require("../assets/map-marker-blue.svg"),
+        iconUrl: require("../assets/map-pin-solid.svg"),
         iconSize: [35, 35],
       });
 
@@ -145,7 +169,7 @@ export default {
       //create marker
       const customMarker = leaflet.icon({
         // TODO change marker image
-        iconUrl: require("../assets/map-marker-blue.svg"),
+        iconUrl: require("../assets/location-dot-solid.svg"),
         iconSize: [35, 35],
       });
 
@@ -181,7 +205,7 @@ export default {
       //create marker
       const customMarker = leaflet.icon({
         // TODO change marker image
-        iconUrl: require("../assets/map-marker-blue.svg"),
+        iconUrl: require("../assets/location-dot-solid.svg"),
         iconSize: [35, 35],
       });
 

@@ -1,10 +1,10 @@
 <template>
   <div
-    class="w-full md:w-auto absolute md:top-[40px] md:left-[80px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
+    class="w-full md:w-auto absolute justify-center md:top-[40px] md:left-[80px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
   >
     <!-- TODO: sistemare posizionamento searchbar -->
     <!-- Search -->
-    <div class="realtive flex-1 md:min-w-[350px]">
+    <div class=" realtive flex-1 md:min-w-[350px]">
       <!-- Input -->
       <input
         class="pl-9 pr-4 py-3 text-sm focus:outline-none w-full shadow-md rounded-md"
@@ -15,12 +15,12 @@
         @focus="$emit('toggleSearchResults')"
       />
       <!-- Search Icon -->
-      <div class="absolute top-0 left-[8px] h-full flex items-center">
+      <!-- <div class="absolute top-0 left-[8px] h-full flex items-center">
         <i class="fas fa-search"></i>
-      </div>
+      </div> -->
 
       <!-- Search Results -->
-      <div class="absolute mt-[8px] w-full">
+      <div class=" mt-[8px] w-full">
         
         <!-- Results -->
         <div v-if="searchQuery && searchResults" class="h-[200px] overflow-scroll bg-white rounded-md">
@@ -56,7 +56,8 @@
           </p>
           <p class="text-xs">{{ selectedResult.properties.category }}</p>
           
-          <i @click="addFav()" class="flex justify-end fa-regular fa-star"></i>
+          <i @click="addFav()" class="flex justify-end fa-solid fa-heart-circle-plus"></i>
+          
           <!-- <i class="flex justify-end fa-solid fa-star"></i> -->
         </div>
       </div>
@@ -113,9 +114,7 @@ export default {
       emit("removeResult")
     }
 
-    const addFav = () => {
-       
-
+    const placeAsign = async () =>{
       let place = {
         locality: selectedResult.value.locality,
         city: selectedResult.value.city,
@@ -124,8 +123,13 @@ export default {
         lat: selectedResult.value.center[1],
         lng: selectedResult.value.center[0]
       }
+      return place
+    }
 
-      axios.post(`http://localhost:3000/addFavPlace`,{data: place }) 
+    const addFav = async () => {
+      
+      axios.post(`http://localhost:3000/addFavPlace`,{data: await placeAsign() }) 
+      
     }
 
     return { searchQuery, searchData, search, selectResult, queryTimeout, selectedResult, removeResult, addFav };

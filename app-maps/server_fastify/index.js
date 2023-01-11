@@ -62,7 +62,6 @@ fastify.get('/getFavList', async (request, reply) => {
 
 fastify.get('/getCoords/:id_place', async (request, reply) => {
 
-  console.log(request.params.id_place)
   let { rows } = await fastify.pg.query(
     'SELECT lat,lng FROM coords WHERE id_place = $1',
     [request.params.id_place]
@@ -70,6 +69,20 @@ fastify.get('/getCoords/:id_place', async (request, reply) => {
   console.log(rows)
   reply.send(rows)
 
+})
+
+fastify.delete('/removePlace/:id_place', async (request, reply) => {
+  await fastify.pg.query(
+    'DELETE FROM coords WHERE id_place = $1',
+    [request.params.id_place]
+  )
+  
+  await fastify.pg.query(
+    'DELETE FROM place WHERE id_place = $1',
+    [request.params.id_place]
+  )
+
+  console.log('SIUM')
 })
 
 const start = async () => {
