@@ -6,7 +6,11 @@ module.exports = {
   ],
   jit: true,
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        mapsBack: 'url(../assent/wallpaper/wallpaper_map1.svg)'
+      }
+    },
   },
   plugins: [],
 }

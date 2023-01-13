@@ -1,5 +1,5 @@
 <template>
-  <div class=" md:w-auto fixed bottom-1 right-1 z-[2] flex px-2 py-2 mr-4 mb-4 bg-white opacity-80 border border-black border-2 rounded-md shadow-md">
+  <div class=" md:w-auto fixed bottom-1 right-1 z-[2] flex px-2 py-2 mr-4 mb-4 bg-white opacity-80 border border-black border-2 rounded-md shadow-md" style="font-family: 'Sofia Sans', sans-serif">
     <!-- <div class="">
       <button @click="viewFavList()" class="bg-black hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full ">
         <i class="fa-sharp fa-solid fa-heart"></i>
@@ -11,11 +11,11 @@
         Favorite
       </div>
       <div>
-        Places
+        Places:
       </div>
       
     </div>
-    <div  class=" overflow-auto bg-transparent rounded-md mx-2 max-h-64">
+    <div  class=" overflow-auto bg-transparent rounded-md mx-2 max-h-64 w-48">
       <div v-for="(place, index) in list" :key="index" class="mx-2 my-2 mr-2 bg-gray-200 rounded-md">
           <div class="mx-2">
             {{ place.locality }}, {{ place.city }}
@@ -88,8 +88,11 @@ export default {
     },
     async removePlace(place){
       let id_place = place.id_place
-      axios
+      await axios
         .delete(`http://localhost:3000/removePlace/${id_place}`)
+        
+      this.$router.go(0)
+    
     },
 
   }

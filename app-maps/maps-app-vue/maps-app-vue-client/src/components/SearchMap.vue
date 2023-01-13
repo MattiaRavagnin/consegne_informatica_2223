@@ -129,8 +129,8 @@ export default {
     const addFav = async () => {
       
       await axios.post(`http://localhost:3000/addFavPlace`,{data: await placeAsign() })
-      
-      
+      location.reload()
+
     }
 
     return { searchQuery, searchData, search, selectResult, queryTimeout, selectedResult, removeResult, addFav };
