@@ -9,7 +9,7 @@
     />
 
     <div >
-      <!-- TODO: put search on left-down side from here -->
+      
       <SearchMap  
         :fetchCoords="fetchCoords"
         :coords="coords"

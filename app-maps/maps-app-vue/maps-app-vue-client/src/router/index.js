@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/map',
     name: 'Map',
-    component: Home
+    component: Enter
   },
   {
     path: '/login',
@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/',
     name: 'Enter',
-    component: Enter
+    component: Home
   }
 
 ]

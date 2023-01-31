@@ -2,7 +2,6 @@
   <div
     class="w-full md:w-auto absolute justify-center md:top-[40px] md:left-[80px] z-[2] flex gap-4 px-6 py-8 md:px-0 md:py-0 bg-transparent"
   >
-    <!-- TODO: sistemare posizionamento searchbar -->
     <!-- Search -->
     <div class=" realtive flex-1 md:min-w-[350px]">
       <!-- Input -->
@@ -23,9 +22,9 @@
       <div class=" mt-[8px] w-full">
         
         <!-- Results -->
-        <div v-if="searchQuery && searchResults" class="h-[200px] overflow-scroll bg-white rounded-md">
+        <div v-if="searchQuery && searchResults" class="h-[200px] overflow-scroll bg-white opacity-80 rounded-md">
           <!-- Loading -->
-          <!-- FIXME loading panel -->
+          
           <Loading v-if="!searchData"/>
           <div v-else>
             <div

@@ -1,11 +1,5 @@
 <template>
   <div class=" md:w-auto fixed bottom-1 right-1 z-[2] flex px-2 py-2 mr-4 mb-4 bg-white opacity-80 border border-black border-2 rounded-md shadow-md" style="font-family: 'Sofia Sans', sans-serif">
-    <!-- <div class="">
-      <button @click="viewFavList()" class="bg-black hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full ">
-        <i class="fa-sharp fa-solid fa-heart"></i>
-      </button>
-    </div> -->
-    <!-- v-if="showList" -->
     <div class="px-2 text-lg">
       <div>
         Favorite

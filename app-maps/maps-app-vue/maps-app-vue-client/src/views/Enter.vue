@@ -2,7 +2,7 @@
 
   <div class="bg-cover bg-center z-[0] bg-slate-200">
 
-    <img src="../assets/wallpaper/WallpaperDog-20512852.jpg" alt="" class="z-[0] relative">
+    <!-- <img src="../assets/wallpaper/WallpaperDog-20512852.jpg" alt="" class="z-[0] relative"> -->
 
     <div class="flex items-center justify-center h-screen z-[10] absolute" style="font-family: 'Sofia Sans', sans-serif">
       <div>

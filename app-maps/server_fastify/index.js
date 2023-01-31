@@ -13,8 +13,6 @@ fastify.register(cors,{origin:true})
 //routes
 fastify.register(require('./routes/getGeocoding'), { prefix: '/api/search' })
 
-//fastify.register(require('./routes/db'))
-
 fastify.register(postgres,{
   connectionString: `postgresql://postgres:password@localhost/favlistmap_db`
   //postgresql://{role}:{password}@{indirizzo}/{namedb}
