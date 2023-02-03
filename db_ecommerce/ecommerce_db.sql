@@ -42,7 +42,7 @@ CREATE TABLE "product" (
 
 CREATE TABLE "order_details" (
   "id" int PRIMARY KEY,
-  "user_id" varchar,
+  "user_id" int,
   "total" decimal,
   "payment_id" int,
   "created_at" timestamp,
