@@ -6,7 +6,6 @@ import '../src/assets/tailwind.css'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-
 const app = createApp(App)
 
 import gAuth from 'vue3-google-oauth2'

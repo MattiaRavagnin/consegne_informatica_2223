@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Enter from '../views/Enter.vue'
+import MapBox from '../views/MapBox.vue'
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/',
     name: 'Enter',
     component: Home
+  },
+  {
+    path: '/mapbox',
+    name: 'Mapbox',
+    component: MapBox
   }
 
 ]
