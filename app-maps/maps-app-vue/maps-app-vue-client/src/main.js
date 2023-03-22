@@ -12,7 +12,6 @@ import gAuth from 'vue3-google-oauth2'
 
 let gauthClientId =  '431906524163-3pp0dqcajdq4i01s2khftq42gmk7i7tp.apps.googleusercontent.com' 
 
-
 app
     .use(router) 
     .component('font-awesome-icon', FontAwesomeIcon)

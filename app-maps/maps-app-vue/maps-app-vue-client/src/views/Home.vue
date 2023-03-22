@@ -23,7 +23,7 @@
       
       </SearchMap>
     </div>
-    
+
 
     <div class="">
       <FavList></FavList>
