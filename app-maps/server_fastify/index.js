@@ -6,7 +6,12 @@ const cors = require('@fastify/cors')
 const postgres = require('@fastify/postgres')
 const uuid = require('uuid')
 
+const axios = require('axios')
+
 const PORT = 3000
+
+const tokenCreate = 'sk.eyJ1IjoibWF0dGlhcmF2YWduaW45OSIsImEiOiJjbGZ0bTJveTkwMmE0M3NwaWMwNDl2bmEwIn0.rB5tWd3C1N-O-BL7vQ60Xw'
+
 
 fastify.register(cors,{origin:true})
 
@@ -17,6 +22,18 @@ fastify.register(postgres,{
   connectionString: `postgresql://postgres:password@localhost/favlistmap_db`
   //postgresql://{role}:{password}@{indirizzo}/{namedb}
 })
+
+//pass token dentro un JVT e salvare nei cookies
+fastify.get('/getToken', async (request, reply) => {
+  axios.post(`https://api.mapbox.com/tokens/v2/mattiaravagnin99?access_token=${tokenCreate}`,
+  {
+    "expires": "2016-09-15T19:27:53.000Z", //teoricamente 2h indietro 
+    "scopes": ["styles:read", "fonts:read"]
+  }
+  )
+
+})
+
 
 fastify.post('/addFavPlace', async (request, reply) =>{
   let place = {
