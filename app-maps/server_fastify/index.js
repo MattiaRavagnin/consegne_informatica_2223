@@ -25,12 +25,26 @@ fastify.register(postgres,{
 
 //pass token dentro un JVT e salvare nei cookies
 fastify.get('/getToken', async (request, reply) => {
-  axios.post(`https://api.mapbox.com/tokens/v2/mattiaravagnin99?access_token=${tokenCreate}`,
-  {
-    "expires": "2016-09-15T19:27:53.000Z", //teoricamente 2h indietro 
-    "scopes": ["styles:read", "fonts:read"]
-  }
-  )
+
+  //TODO: token expire
+  //token with expire
+  // axios.post(`https://api.mapbox.com/tokens/v2/mattiaravagnin99?access_token=${tokenCreate}`,
+  // {
+  //   "expires": "2016-09-15T19:27:53.000Z", //indietro di 2h 
+  //   "scopes": ["styles:read", "fonts:read"]
+  // }
+  // )
+
+  await axios.post(`https://api.mapbox.com/tokens/v2/mattiaravagnin99?access_token=${tokenCreate}`,
+    {
+      "scopes": ["styles:read", "fonts:read"]
+    }
+  ).then( (response) => {
+    reply.send(response.data)
+    
+  })
+
+  
 
 })
 

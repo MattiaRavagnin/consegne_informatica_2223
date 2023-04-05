@@ -1,17 +1,6 @@
 <template>
   <div class="h-screen relative">
 
-    <SearchMap
-      :fetchCoords="fetchCoords"
-      :coords="coords"
-      @toggleSearchResults="toggleSearchResults"
-      @getGeolocation="getGeolocation"
-      @plotResult="plotResult"
-      @removeResult="removeResult"
-      :searchResults="searchResults"
-      class=""
-    />
-
     <div id="map" class="h-full z-[1] rounded-lg"></div>
 
   </div>
@@ -28,28 +17,35 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 //import MapboxDirections from "@mapbox/mapbox-gl-directions"
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
-import SearchMap from "../components/SearchMap.vue";
 
+import axios from "axios";
 
 
 export default {
   name: "Test",
   created() {},
   components: {
-    SearchMap
+    
   },
   data() {
     return {
-      info: {},
+      infoPlace: {},
       access_token: 'pk.eyJ1IjoibWF0dGlhcmF2YWduaW45OSIsImEiOiJjbGFmc2w4aTgwb2ZmM3JwcXF6Mzg3NXhsIn0.gZ_Rxa5VLS6ei_wXvRrgeQ',
       //access_token: process.env.VUE_APP_MAP_ACCESS_TOKEN,
+      tokenReq: ''
     };
   },
   props: {},
-  mounted() {
+  async mounted() {
     //GET server for token
-    mapboxgl.accessToken = this.access_token;
-
+    await axios.get(`http://localhost:3000/getToken`)
+      .then( (response) => {
+        this.tokenReq = response.data.token
+      })
+      .catch( (e) => {console.log(e)})
+    
+    mapboxgl.accessToken = this.tokenReq;
+    
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mattiaravagnin99/clcge9cqi005j14p29e7mdnrp",
@@ -76,8 +72,8 @@ export default {
       mapboxgl: mapboxgl,
       reverseGeocode: true,
       getItemValue: (item) => {
-        this.info = item;
-        console.log(this.info)
+        this.infoPlace = item;
+        console.log(this.infoPlace)
       },
 
       })
